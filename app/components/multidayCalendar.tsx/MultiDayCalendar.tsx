@@ -1,6 +1,6 @@
 "use client";
 
-import { addDays, format, startOfWeek } from "date-fns";
+import { addDays, addWeeks, format, startOfWeek } from "date-fns";
 import { useMemo, useState } from "react";
 
 import ChevronLeft from "@/app/icons/ChevronLeft";
@@ -16,6 +16,19 @@ export default function MultiDayCalendar({ eventList }) {
     format(addDays(startOfCurrentWeek, i), "yyyy-MM-dd")
   );
 
+  const filteredEvents = useMemo(() => {
+    return weekDays.reduce((acc, day) => {
+      if (eventList[day]) {
+        acc[day] = eventList[day];
+      }
+      return acc;
+    }, {});
+  }, [eventList, weekDays]);
+
+  const changeWeek = (direction) => {
+    setCurrentWeek((prev) => addWeeks(prev, direction * 1));
+  };
+
   const daysofTheWeek = [
     "Monday",
     "Tuesday",
@@ -26,22 +39,13 @@ export default function MultiDayCalendar({ eventList }) {
     "Sunday",
   ];
 
-  const filteredEvents = useMemo(() => {
-    return weekDays.reduce((acc, day) => {
-      if (eventList[day]) {
-        acc[day] = eventList[day];
-      }
-      return acc;
-    }, {});
-  }, [eventList, weekDays]);
-
   return (
     <>
-      <div className="relative w-full">
+      <div className="relative w-full font-playfair">
         <div className="items-center space-4 gap-4 flex">
           <button
-            onClick={() => {}}
-            className="px-4 py-2 bg-light rounded hover:bg-dark cursor-pointer"
+            onClick={() => changeWeek(-1)}
+            className="px-4 py-2 bg-primary rounded hover:bg-secondary cursor-pointer"
           >
             <ChevronLeft />
           </button>
@@ -64,14 +68,16 @@ export default function MultiDayCalendar({ eventList }) {
                   </div>
                   <div>{format(day, "dd").padStart(2, "0")}</div>
                 </div>
-                <DayColumn events={filteredEvents[day] || []} />
+                <DayColumn
+                  events={filteredEvents[day] || []} // Pass only the events for that day
+                />
               </div>
             );
           })}
 
           <button
-            onClick={() => {}}
-            className="px-4 py-2 bg-light rounded hover:bg-dark cursor-pointer"
+            onClick={() => changeWeek(1)}
+            className="px-4 py-2 bg-primary rounded hover:bg-secondary cursor-pointer"
           >
             <ChevronRight />
           </button>
