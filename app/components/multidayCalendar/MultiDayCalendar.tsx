@@ -62,8 +62,8 @@ export default function MultiDayCalendar({ eventList, setEventList }: Props) {
           <motion.div
             key={currentWeek.toDateString()}
             className="grid grid-cols-7 gap-2 py-4 w-full h-24 bg-linear-to-r from-primary to-secondary rounded-t-lg"
-            animate={{ x: [150, 0] }} // Slide effect when clicking "Next"
-            transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} // Smooth spring effect
+            animate={{ x: [150, 0] }}
+            transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
           >
             {weekDays.map((day, index) => {
               return (

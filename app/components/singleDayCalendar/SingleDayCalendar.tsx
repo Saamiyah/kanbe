@@ -10,7 +10,7 @@ import { useSwipeable } from "react-swipeable";
 
 type Props = {
   eventList: EventsByDate;
-  setEventList: () => void;
+  setEventList: (events: EventsByDate) => void;
 };
 
 export default function SingleDayCalendar({ eventList, setEventList }: Props) {
