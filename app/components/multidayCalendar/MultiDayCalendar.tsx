@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import ChevronLeft from "@/app/icons/ChevronLeft";
 import ChevronRight from "@/app/icons/ChevronRight";
 import DayColumn from "../dayColumn/DayColumn";
+import { motion } from "motion/react";
 
 type Props = {
   eventList: EventsByDate;
@@ -57,31 +58,40 @@ export default function MultiDayCalendar({ eventList, setEventList }: Props) {
           </button>
 
           {/* Week View */}
-          {weekDays.map((day, index) => {
-            return (
-              <div className="flex flex-col gap-2" key={day.toString()}>
-                <div
-                  className={`py-4 w-full flex flex-col justify-center items-center `}
-                >
+
+          <motion.div
+            key={currentWeek.toDateString()}
+            className="grid grid-cols-7 gap-2 py-4 w-full h-24 bg-linear-to-r from-primary to-secondary rounded-t-lg"
+            animate={{ x: [150, 0] }} // Slide effect when clicking "Next"
+            transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} // Smooth spring effect
+          >
+            {weekDays.map((day, index) => {
+              return (
+                <div className="flex flex-col gap-2" key={day.toString()}>
                   <div
-                    className={`${
-                      format(day, "yyyy-MM-dd") ==
-                        format(new Date(), "yyyy-MM-dd") &&
-                      "font-bold underline"
-                    }`}
+                    className={`py-4 w-full flex flex-col justify-center items-center `}
                   >
-                    {daysofTheWeek[index].toLocaleUpperCase()}
+                    <div
+                      className={`${
+                        format(day, "yyyy-MM-dd") ==
+                          format(new Date(), "yyyy-MM-dd") &&
+                        "font-bold underline"
+                      }`}
+                    >
+                      {daysofTheWeek[index].toLocaleUpperCase()}
+                    </div>
+                    <div>{format(day, "dd").padStart(2, "0")}</div>
                   </div>
-                  <div>{format(day, "dd").padStart(2, "0")}</div>
+
+                  <DayColumn
+                    events={filteredEvents[day] || []}
+                    setEventList={setEventList}
+                    dateString={day}
+                  />
                 </div>
-                <DayColumn
-                  events={filteredEvents[day] || []}
-                  setEventList={setEventList}
-                  dateString={day}
-                />
-              </div>
-            );
-          })}
+              );
+            })}
+          </motion.div>
 
           <button
             onClick={() => changeWeek(1)}
