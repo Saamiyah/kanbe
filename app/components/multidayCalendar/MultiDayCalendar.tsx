@@ -10,9 +10,10 @@ import DayColumn from "../dayColumn/DayColumn";
 
 type Props = {
   eventList: EventsByDate;
+  setEventList: () => void;
 };
 
-export default function MultiDayCalendar({ eventList }: Props) {
+export default function MultiDayCalendar({ eventList, setEventList }: Props) {
   const [currentWeek, setCurrentWeek] = useState(new Date());
 
   const startOfCurrentWeek = startOfWeek(currentWeek, { weekStartsOn: 1 });
@@ -73,7 +74,10 @@ export default function MultiDayCalendar({ eventList }: Props) {
                   </div>
                   <div>{format(day, "dd").padStart(2, "0")}</div>
                 </div>
-                <DayColumn events={filteredEvents[day] || []} />
+                <DayColumn
+                  events={filteredEvents[day] || []}
+                  setEventList={setEventList}
+                />
               </div>
             );
           })}

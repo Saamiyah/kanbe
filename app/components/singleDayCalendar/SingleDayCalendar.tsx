@@ -7,9 +7,10 @@ import { useState } from "react";
 
 type Props = {
   eventList: EventsByDate;
+  setEventList: () => void;
 };
 
-export default function SingleDayCalendar({ eventList }: Props) {
+export default function SingleDayCalendar({ eventList, setEventList }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const formattedDate = format(currentDate, "yyyy-MM-dd");
 
@@ -23,6 +24,7 @@ export default function SingleDayCalendar({ eventList }: Props) {
         <DayColumn
           events={eventList[formattedDate] || []}
           key={formattedDate}
+          setEventList={setEventList}
         />
       </div>
     </>
