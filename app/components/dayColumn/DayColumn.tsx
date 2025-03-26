@@ -38,8 +38,17 @@ export default function DayColumn({
             ? [...prevEvents[dateString], event]
             : [event];
 
+          // sort the new day event list in order of their time
+          const sortedTargetEvents = updatedTargetEvents.sort((a, b) => {
+            return compareAsc(
+              parse(a.time, "hh:mm a", new Date()),
+              parse(b.time, "hh:mm a", new Date())
+            );
+          });
+
           const newEvents = {
             ...prevEvents,
+            [dateString]: sortedTargetEvents,
             [sourceDate]: updatedSourceEvents,
           };
 
