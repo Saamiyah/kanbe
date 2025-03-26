@@ -48,11 +48,13 @@ export default function EventCard({ event, dateString }: Props) {
         </p>
 
         <div className="text-lg text-gray-500 hover:text-gray-900 cursor-pointer border-t-2 border-amber-400 shadow-md bg-white">
-          <div className="w-auto overflow-ellipsis flex flex-col gap-2 p-4">
-            <p className="md:text-sm text-md self-start text-black">
+          <div className="w-auto flex flex-col gap-2 p-4 overflow-ellipsis">
+            <p className="md:text-sm text-md font-semibold text-black">
               {event.title}
             </p>
-            <p className="p-2 md:text-sm text-md">{event.description}</p>
+            <p className="p-2 md:text-sm text-md whitespace-break-spaces">
+              {event.description}
+            </p>
           </div>
         </div>
       </div>
