@@ -4,7 +4,7 @@ import { Event } from "@/app/api/data";
 import EventCard from "../eventCard/EventCard";
 
 type DayColumnProps = {
-  events: any;
+  events: Event[];
 };
 
 export default function DayColumn({ events }: DayColumnProps) {

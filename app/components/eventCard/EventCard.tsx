@@ -1,6 +1,11 @@
 "use client";
 
-export default function EventCard({ event }) {
+import { Event } from "@/app/api/data";
+
+type Props = {
+  event: Event;
+};
+export default function EventCard({ event }: Props) {
   return (
     <div onClick={() => {}}>
       <div>

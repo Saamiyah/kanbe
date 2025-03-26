@@ -6,8 +6,13 @@ import { useMemo, useState } from "react";
 import ChevronLeft from "@/app/icons/ChevronLeft";
 import ChevronRight from "@/app/icons/ChevronRight";
 import DayColumn from "../dayColumn/DayColumn";
+import { EventsByDate } from "@/app/api/data";
 
-export default function MultiDayCalendar({ eventList }) {
+type Props = {
+  eventList: EventsByDate;
+};
+
+export default function MultiDayCalendar({ eventList }: Props) {
   const [currentWeek, setCurrentWeek] = useState(new Date());
 
   const startOfCurrentWeek = startOfWeek(currentWeek, { weekStartsOn: 1 });
@@ -25,7 +30,7 @@ export default function MultiDayCalendar({ eventList }) {
     }, {});
   }, [eventList, weekDays]);
 
-  const changeWeek = (direction) => {
+  const changeWeek = (direction: number) => {
     setCurrentWeek((prev) => addWeeks(prev, direction * 1));
   };
 
