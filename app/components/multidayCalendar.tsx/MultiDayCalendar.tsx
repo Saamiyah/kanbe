@@ -1,10 +1,11 @@
 "use client";
 
 import { addDays, format, startOfWeek } from "date-fns";
+import { useMemo, useState } from "react";
 
 import ChevronLeft from "@/app/icons/ChevronLeft";
 import ChevronRight from "@/app/icons/ChevronRight";
-import { useState } from "react";
+import DayColumn from "../dayColumn/DayColumn";
 
 export default function MultiDayCalendar({ eventList }) {
   const [currentWeek, setCurrentWeek] = useState(new Date());
@@ -24,6 +25,15 @@ export default function MultiDayCalendar({ eventList }) {
     "Saturday",
     "Sunday",
   ];
+
+  const filteredEvents = useMemo(() => {
+    return weekDays.reduce((acc, day) => {
+      if (eventList[day]) {
+        acc[day] = eventList[day];
+      }
+      return acc;
+    }, {});
+  }, [eventList, weekDays]);
 
   return (
     <>
@@ -54,6 +64,7 @@ export default function MultiDayCalendar({ eventList }) {
                   </div>
                   <div>{format(day, "dd").padStart(2, "0")}</div>
                 </div>
+                <DayColumn events={filteredEvents[day] || []} />
               </div>
             );
           })}
