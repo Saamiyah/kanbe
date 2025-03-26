@@ -1,6 +1,7 @@
 "use client";
 
 import { Event } from "@/app/api/data";
+import EventModal from "../eventDetail/EventDetail";
 import { useDrag } from "react-dnd";
 import { useState } from "react";
 
@@ -30,6 +31,7 @@ export default function EventCard({ event, dateString }: Props) {
       style={{
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: isDragging ? "red" : "none",
+        cursor: "move",
         touchAction: "none",
       }}
       ref={drag}
@@ -46,6 +48,12 @@ export default function EventCard({ event, dateString }: Props) {
           </div>
         </div>
       </div>
+      {selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   );
 }

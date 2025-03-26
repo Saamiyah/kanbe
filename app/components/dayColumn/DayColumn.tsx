@@ -1,7 +1,7 @@
 "use client";
 
 import { Event, EventsByDate } from "@/app/api/data";
-import { compareAsc, format, getDate, parse, parseISO } from "date-fns";
+import { compareAsc, parse } from "date-fns";
 
 import EventCard from "../eventCard/EventCard";
 import { useDrop } from "react-dnd";
