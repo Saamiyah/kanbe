@@ -57,7 +57,7 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
 
   return (
     <>
-      <header className="relative w-full font-playfair text-black p-4  bg-linear-to-r from-light to-dark">
+      <header className="relative w-full font-playfair text-black p-4  bg-linear-to-r from-primary to-secondary">
         <div className="grid grid-cols-7 gap-2 ">
           {weekDays.map((day, index) => (
             <div
@@ -65,8 +65,8 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
               onClick={() => changeDay(day)}
               className={`${
                 format(currentDate, "yyyy-MM-dd") ===
-                  format(day, "yyyy-MM-dd") && "bg-pink-100"
-              } p-2 w-fit flex flex-col justify-center items-center bg-gray-100 rounded-md`}
+                  format(day, "yyyy-MM-dd") && "bg-primary shadow-md"
+              } p-2 w-auto flex flex-col justify-center items-center bg-gray-100 rounded-md`}
             >
               <div>{daysofTheWeek[index]}</div>
               <div>{format(day, "dd").padStart(2, "0")}</div>
@@ -75,8 +75,8 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
         </div>
       </header>
       <div className="relative w-full" {...handlers}>
-        <h3 className="my-4 text-black">
-          {format(currentDate, "EEEE, dd MMM")}
+        <h3 className="m-4 text-gray-600 font-playfair text-lg">
+          {format(currentDate, "EEEE, dd MMM yyyy")}
         </h3>
 
         <div className="absolute w-10 h-full z-10" ref={dropPrev}></div>

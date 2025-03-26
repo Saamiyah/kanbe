@@ -2,14 +2,15 @@
 
 import Close from "@/app/icons/Close";
 import { Event } from "@/app/api/data";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
-interface EventModalProps {
+interface EventDetailProps {
   event: Event | null;
   onClose: () => void;
 }
 
-export default function EventModal({ event, onClose }: EventModalProps) {
+export default function EventDetail({ event, onClose }: EventDetailProps) {
   if (!event) return null;
 
   return (
@@ -40,9 +41,11 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           </h2>
 
           {event.imageUrl && (
-            <img
+            <Image
               src={event.imageUrl}
               alt={event.title}
+              width={500}
+              height={400}
               className="rounded-lg w-full h-40 object-cover mb-4"
             />
           )}

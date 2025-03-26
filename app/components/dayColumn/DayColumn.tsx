@@ -67,11 +67,13 @@ export default function DayColumn({
       className="h-screen font-playfair text-center p-2 shadow transition-all bg-white"
       style={{ opacity: isOver ? 0.5 : 1 }}
     >
-      <div className="m-2 flex flex-col gap-4">
+      <div className="m-2 flex flex-col gap-6">
         {(events.length > 0 &&
           events.map((event: Event) => (
             <EventCard key={event.id} event={event} dateString={dateString} />
-          ))) || <div className="text-sm text-gray-500">No events</div>}
+          ))) || (
+          <div className="text-md md:text-sm text-gray-500">No events</div>
+        )}
       </div>
     </div>
   );
