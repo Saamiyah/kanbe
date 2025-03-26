@@ -1,5 +1,7 @@
 "use client";
 
+import { Event } from "@/app/api/data";
+
 type DayColumnProps = {
   events: any;
 };
@@ -9,7 +11,7 @@ export default function DayColumn({ events }: DayColumnProps) {
     <div className="h-screen text-center p-2 shadow transition-all bg-white">
       <div className="m-2 flex flex-col gap-4">
         {(events.length > 0 &&
-          events.map((event) => (
+          events.map((event: Event) => (
             <div>
               <p className="text-sm flex justify-end bg-none text-black">
                 {event.time}
