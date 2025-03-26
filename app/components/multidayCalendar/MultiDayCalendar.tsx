@@ -10,7 +10,7 @@ import DayColumn from "../dayColumn/DayColumn";
 
 type Props = {
   eventList: EventsByDate;
-  setEventList: () => void;
+  setEventList: (events: EventsByDate) => void;
 };
 
 export default function MultiDayCalendar({ eventList, setEventList }: Props) {
@@ -77,6 +77,7 @@ export default function MultiDayCalendar({ eventList, setEventList }: Props) {
                 <DayColumn
                   events={filteredEvents[day] || []}
                   setEventList={setEventList}
+                  dateString={day}
                 />
               </div>
             );
