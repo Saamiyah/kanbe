@@ -11,7 +11,7 @@ export interface EventsByDate {
 }
 
 const events: EventsByDate = {
-  "2025-03-11": [
+  "2025-03-25": [
     {
       id: "event-1",
       title: "Coffee with Alex",
@@ -28,7 +28,7 @@ const events: EventsByDate = {
       time: "02:00 PM",
     },
   ],
-  "2025-03-12": [
+  "2025-03-26": [
     {
       id: "event-3",
       title: "Yoga Session",
