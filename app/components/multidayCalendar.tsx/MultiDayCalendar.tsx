@@ -1,12 +1,12 @@
 "use client";
 
+import { Event, EventsByDate } from "@/app/api/data";
 import { addDays, addWeeks, format, startOfWeek } from "date-fns";
 import { useMemo, useState } from "react";
 
 import ChevronLeft from "@/app/icons/ChevronLeft";
 import ChevronRight from "@/app/icons/ChevronRight";
 import DayColumn from "../dayColumn/DayColumn";
-import { EventsByDate } from "@/app/api/data";
 
 type Props = {
   eventList: EventsByDate;
@@ -22,7 +22,7 @@ export default function MultiDayCalendar({ eventList }: Props) {
   );
 
   const filteredEvents = useMemo(() => {
-    return weekDays.reduce((acc, day) => {
+    return weekDays.reduce((acc: Record<string, Event[]>, day) => {
       if (eventList[day]) {
         acc[day] = eventList[day];
       }
@@ -73,9 +73,7 @@ export default function MultiDayCalendar({ eventList }: Props) {
                   </div>
                   <div>{format(day, "dd").padStart(2, "0")}</div>
                 </div>
-                <DayColumn
-                  events={filteredEvents[day] || []} // Pass only the events for that day
-                />
+                <DayColumn events={filteredEvents[day] || []} />
               </div>
             );
           })}

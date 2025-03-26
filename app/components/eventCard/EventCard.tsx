@@ -9,7 +9,7 @@ export default function EventCard({ event }: Props) {
   return (
     <div onClick={() => {}}>
       <div>
-        <p className="text-sm font-bold flex justify-end bg-none text-black font-playfairico">
+        <p className="text-sm font-bold flex justify-end bg-none text-black font-playfair">
           {event.time}
         </p>
 

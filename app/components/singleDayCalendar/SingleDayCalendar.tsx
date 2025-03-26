@@ -21,7 +21,7 @@ export default function SingleDayCalendar({ eventList }: Props) {
         </h3>
 
         <DayColumn
-          events={eventList[formattedDate] || []} // Pass only the events for that day
+          events={eventList[formattedDate] || []}
           key={formattedDate}
         />
       </div>
