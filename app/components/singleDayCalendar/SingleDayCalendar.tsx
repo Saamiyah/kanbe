@@ -1,9 +1,10 @@
 "use client";
 
-import { addDays, format, startOfWeek } from "date-fns";
+import { addDays, format, parse, startOfWeek } from "date-fns";
 
 import DayColumn from "../dayColumn/DayColumn";
 import { EventsByDate } from "@/app/api/data";
+import { useDrop } from "react-dnd";
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
@@ -16,6 +17,8 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const formattedDate = format(currentDate, "yyyy-MM-dd");
+
+  const daysofTheWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const changeDay = (newDate: Date) => {
     setCurrentDate(newDate);
@@ -32,11 +35,31 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
     delta: 100,
   });
 
+  const [{ isOverNext }, dropNext] = useDrop(() => ({
+    accept: "EVENT",
+    hover: () => {
+      changeDay(addDays(currentDate, 1));
+    },
+    collect: (monitor) => ({
+      isOverNext: monitor.isOver(),
+    }),
+  }));
+
+  const [{ isOverPrev }, dropPrev] = useDrop(() => ({
+    accept: "EVENT",
+    hover: () => {
+      changeDay(addDays(currentDate, -1));
+    },
+    collect: (monitor) => ({
+      isOverPrev: monitor.isOver(),
+    }),
+  }));
+
   return (
     <>
-      <header className="relative w-full font-playfair text-black p-4  bg-linear-to-r from-primary to-secondary">
+      <header className="relative w-full font-playfair text-black p-4  bg-linear-to-r from-light to-dark">
         <div className="grid grid-cols-7 gap-2 ">
-          {weekDays.map((day) => (
+          {weekDays.map((day, index) => (
             <div
               key={day.toString()}
               onClick={() => changeDay(day)}
@@ -45,23 +68,25 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
                   format(day, "yyyy-MM-dd") && "bg-pink-100"
               } p-2 w-fit flex flex-col justify-center items-center bg-gray-100 rounded-md`}
             >
+              <div>{daysofTheWeek[index]}</div>
               <div>{format(day, "dd").padStart(2, "0")}</div>
             </div>
           ))}
         </div>
       </header>
-
       <div className="relative w-full" {...handlers}>
         <h3 className="my-4 text-black">
           {format(currentDate, "EEEE, dd MMM")}
         </h3>
 
+        <div className="absolute w-10 h-full z-10" ref={dropPrev}></div>
         <DayColumn
           dateString={formattedDate}
           events={eventList[formattedDate] || []}
           key={formattedDate}
           setEventList={setEventList}
         />
+        <div className="absolute w-10 h-full z-10" ref={dropNext}></div>
       </div>
     </>
   );
