@@ -5,6 +5,7 @@ import { compareAsc, parse } from "date-fns";
 
 import EventCard from "../eventCard/EventCard";
 import { useDrop } from "react-dnd";
+import { useRef } from "react";
 
 const ItemType = "EVENT";
 
@@ -19,6 +20,8 @@ export default function DayColumn({
   events,
   setEventList,
 }: DayColumnProps) {
+  const dropRef = useRef<HTMLDivElement>(null);
+
   const [{ isOver }, drop] = useDrop<
     { sourceDate: string; event: any },
     void,
@@ -61,9 +64,11 @@ export default function DayColumn({
     }),
   }));
 
+  drop(dropRef);
+
   return (
     <div
-      ref={drop}
+      ref={dropRef}
       className="h-screen font-playfair text-center p-2 shadow transition-all bg-white"
       style={{ opacity: isOver ? 0.5 : 1 }}
     >

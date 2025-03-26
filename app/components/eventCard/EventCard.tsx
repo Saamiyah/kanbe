@@ -1,9 +1,10 @@
 "use client";
 
+import { useRef, useState } from "react";
+
 import { Event } from "@/app/api/data";
 import EventDetail from "../eventDetail/EventDetail";
 import { useDrag } from "react-dnd";
-import { useState } from "react";
 
 const ItemType = "EVENT";
 
@@ -14,6 +15,7 @@ type Props = {
 
 export default function EventCard({ event, dateString }: Props) {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemType,
@@ -25,6 +27,8 @@ export default function EventCard({ event, dateString }: Props) {
     },
   }));
 
+  drag(dragRef);
+
   return (
     <div
       key={event.id}
@@ -34,7 +38,7 @@ export default function EventCard({ event, dateString }: Props) {
         cursor: "move",
         touchAction: "none",
       }}
-      ref={drag}
+      ref={dragRef}
       className="draggable-container"
       onClick={() => setSelectedEvent(event)}
     >

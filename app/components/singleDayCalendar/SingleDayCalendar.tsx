@@ -1,11 +1,11 @@
 "use client";
 
 import { addDays, format, parse, startOfWeek } from "date-fns";
+import { useRef, useState } from "react";
 
 import DayColumn from "../dayColumn/DayColumn";
 import { EventsByDate } from "@/app/api/data";
 import { useDrop } from "react-dnd";
-import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 type Props = {
@@ -15,7 +15,8 @@ type Props = {
 
 export default function SingleDayCalendar({ eventList, setEventList }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
-
+  const dropPrevRef = useRef<HTMLDivElement>(null);
+  const dropNextRef = useRef<HTMLDivElement>(null);
   const formattedDate = format(currentDate, "yyyy-MM-dd");
 
   const daysofTheWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -55,6 +56,9 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
     }),
   }));
 
+  dropPrev(dropPrevRef);
+  dropNext(dropNextRef);
+
   return (
     <>
       <header className="relative w-full font-playfair text-black p-4  bg-linear-to-r from-primary to-secondary">
@@ -79,14 +83,14 @@ export default function SingleDayCalendar({ eventList, setEventList }: Props) {
           {format(currentDate, "EEEE, dd MMM yyyy")}
         </h3>
 
-        <div className="absolute w-10 h-full z-10" ref={dropPrev}></div>
+        <div className="absolute w-10 h-full z-10" ref={dropPrevRef}></div>
         <DayColumn
           dateString={formattedDate}
           events={eventList[formattedDate] || []}
           key={formattedDate}
           setEventList={setEventList}
         />
-        <div className="absolute w-10 h-full z-10" ref={dropNext}></div>
+        <div className="absolute w-10 h-full z-10" ref={dropNextRef}></div>
       </div>
     </>
   );
